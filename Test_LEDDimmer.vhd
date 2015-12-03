@@ -41,12 +41,12 @@ architecture Behavioral of Test_LEDDimmer is
            Refresh : in STD_LOGIC;
            Disp_En : out STD_LOGIC_VECTOR (3 downto 0);
            Disp_Segments : out STD_LOGIC_VECTOR (8 downto 0);
-           LED : out STD_LOGIC_VECTOR (6 downto 0));
+           LED : out STD_LOGIC);
     end component;
     
     signal CLK, Refresh: STD_LOGIC;
     signal ls: STD_LOGIC_VECTOR (2 downto 0);
-    signal led: STD_LOGIC_VECTOR (6 downto 0);
+    signal led: STD_LOGIC;
 begin
     dimmer: LEDDimmer PORT MAP (CLK, ls, Refresh, open, open, led);
     
