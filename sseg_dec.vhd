@@ -185,14 +185,14 @@ begin
 	 lsd  := 0;
 	 llsd := 0;
         
-    for I in 1 to 2 loop
+    for I in 1 to 9 loop
          exit when (cnt_tot >= 0 and cnt_tot < 1000); 
          mmsd := mmsd + 1; -- increment the mmds count
          cnt_tot := cnt_tot - 1000;
     end loop; 
             
     --  calculate the MSB
-    for I in 1 to 2 loop
+    for I in 1 to 9 loop
 	    exit when (cnt_tot >= 0 and cnt_tot < 100); 
 	    msd := msd + 1; -- increment the mmds count
 	    cnt_tot := cnt_tot - 100;
