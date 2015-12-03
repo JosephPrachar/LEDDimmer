@@ -42,7 +42,7 @@ entity ElapsedPercent is
 end ElapsedPercent;
 
 architecture Behavioral of ElapsedPercent is
-    signal i_TotalTime, i_CurrentTime, i_PercentToCheck: integer;
+    signal i_TotalTime, i_CurrentTime: integer;
 begin
     i_TotalTime <= to_integer(unsigned(TotalTime));
     i_CurrentTime <= to_integer(unsigned(CurrentTime));

@@ -37,7 +37,7 @@ entity LEDDimmer is
            Refresh : in STD_LOGIC;
            Disp_En : out STD_LOGIC_VECTOR (3 downto 0);
            Disp_Segments : out STD_LOGIC_VECTOR (8 downto 0);
-           LED : out STD_LOGIC_VECTOR (6 downto 0));
+           LED : out STD_LOGIC);
 end LEDDimmer;
 
 architecture Behavioral of LEDDimmer is
@@ -105,7 +105,7 @@ architecture Behavioral of LEDDimmer is
             Countdown, SetTo100, SetTo50, SetTo0 : STD_LOGIC;
      signal s_LightSwitch: STD_LOGIC_VECTOR (2 downto 0);
      signal RateOfChange: STD_LOGIC_VECTOR (5 downto 0);
-     --signal Intensity: STD_LOGIC_VECTOR (6 downto 0);
+     signal Intensity: STD_LOGIC_VECTOR (6 downto 0);
      signal TotalTime, CurrentTime : STD_LOGIC_VECTOR (11 downto 0);
 begin
     detectChange_m: DetectChange PORT MAP (CLK, LightSwitch, s_LightSwitch, Change);
@@ -123,5 +123,5 @@ begin
     intensityClock: intensity_clock_divider PORT MAP (Clk_Second, RateOfChange, Clk_Intensity);
     toSecondsClkDiv: Timer PORT MAP (Clk_Second, SetTo100, TotalTime, CurrentTime);
     
-    IntensityDownCounter: intensity_down_counter PORT MAP (Clk_Intensity, SetTo100, SetTo50, SetTo0, LED);
+    IntensityDownCounter: intensity_down_counter PORT MAP (Clk_Intensity, SetTo100, SetTo50, SetTo0, Intensity);
 end Behavioral;
