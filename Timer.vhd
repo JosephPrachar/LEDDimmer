@@ -33,17 +33,16 @@ end timer;
 
 architecture Behavioral of timer is
 
-    signal sec : std_logic_vector (11 downto 0) := "111111111111";
+    signal sec : std_logic_vector (11 downto 0) := "000000000000";
     
 begin
     
     dec_seconds : process(reset, divided_clk) begin
-        if RISING_EDGE(reset) then
+        if (reset = '1') then
             sec <= max_time;
             seconds <= max_time;
-        end if;
         
-        if RISING_EDGE(divided_clk) then
+        elsif RISING_EDGE(divided_clk) then
             
             if NOT (sec = x"000") then
                 sec <= std_logic_vector(unsigned(sec) - 1);

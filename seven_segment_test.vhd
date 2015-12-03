@@ -34,6 +34,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity seven_segment_test is
     Port ( clk : in STD_LOGIC;
            max_time : in STD_LOGIC_VECTOR (11 downto 0);
+           reset : in STD_LOGIC;
            segments : out STD_LOGIC_VECTOR (7 downto 0);
            anodes : out STD_LOGIC_VECTOR (3 downto 0));
 end seven_segment_test;
@@ -47,6 +48,7 @@ architecture Behavioral of seven_segment_test is
     
     component timer is Port(
         divided_clk : in STD_LOGIC;
+        reset : in STD_LOGIC;
         max_time : in STD_LOGIC_VECTOR (11 downto 0);
         seconds : out STD_LOGIC_VECTOR (11 downto 0));
     end component timer;
@@ -65,7 +67,7 @@ architecture Behavioral of seven_segment_test is
 begin
 
     new_clocker: second_clock_divider Port Map(old_clock => clk, new_clock => new_clock);
-    timer_mod: timer Port Map(divided_clk => new_clock, max_time => max_time, seconds => seconds);
+    timer_mod: timer Port Map(divided_clk => new_clock, reset => reset, max_time => max_time, seconds => seconds);
     disp: sseg_dec Port Map(ALU_VAL => seconds, VALID => '1', CLK => clk, DISP_EN => anodes, SEGMENTS => segments); 
 
 end Behavioral;
