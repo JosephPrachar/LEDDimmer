@@ -37,8 +37,8 @@ USE ieee.numeric_std.ALL;
 entity ElapsedPercent is
     Port ( TotalTime : in STD_LOGIC_VECTOR (11 downto 0);
            CurrentTime : in STD_LOGIC_VECTOR (11 downto 0);
-           PercentToCheck : in STD_LOGIC_VECTOR (6 downto 0);
-           BelowThreshold : out STD_LOGIC := '0');
+           PercentToCheck : in integer;
+           BelowThreshold : out STD_LOGIC);
 end ElapsedPercent;
 
 architecture Behavioral of ElapsedPercent is
@@ -46,11 +46,10 @@ architecture Behavioral of ElapsedPercent is
 begin
     i_TotalTime <= to_integer(unsigned(TotalTime));
     i_CurrentTime <= to_integer(unsigned(CurrentTime));
-    i_PercentToCheck <= to_integer(unsigned(PercentToCheck));
     
     toLogic: process
     begin
-        if (i_CurrentTime < (i_TotalTime * i_PercentToCheck) / 100) then
+        if (i_CurrentTime < (i_TotalTime * PercentToCheck) / 100) then
             BelowThreshold <= '1';
         else
             BelowThreshold <= '0';
