@@ -33,11 +33,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity LEDDimmer is
     Port ( CLK : in STD_LOGIC;
-           LightSwitch : in STD_LOGIC;
+           LightSwitch : in STD_LOGIC_VECTOR (2 downto 0);
            Refresh : in STD_LOGIC;
            Disp_En : out STD_LOGIC_VECTOR (3 downto 0);
            Disp_Segments : out STD_LOGIC_VECTOR (8 downto 0);
-           LED : out STD_LOGIC);
+           LED : out STD_LOGIC_VECTOR (6 downto 0));
 end LEDDimmer;
 
 architecture Behavioral of LEDDimmer is
@@ -71,16 +71,45 @@ architecture Behavioral of LEDDimmer is
                 Off : out STD_LOGIC);
      end component;
      
+     component sseg_dec Port ( ALU_VAL : in std_logic_vector(11 downto 0); 
+                VALID : in std_logic;
+                CLK : in std_logic;
+                DISP_EN : out std_logic_vector(3 downto 0);
+                SEGMENTS : out std_logic_vector(7 downto 0));
+     end component;
+     
+     component intensity_clock_divider Port ( second_clock : in STD_LOGIC;
+                rate_of_change : in STD_LOGIC_VECTOR (5 downto 0);
+                intensity_clock : out STD_LOGIC);
+     end component;
+     
+     component intensity_down_counter Port ( intensity_clk : in STD_LOGIC;
+                reset : in STD_LOGIC;
+                set_to_half : in STD_LOGIC;
+                set_to_zero : in STD_LOGIC;
+                intensity : out STD_LOGIC_VECTOR (6 downto 0));
+     end component;
+     
+     component second_clock_divider Port ( old_clock : in STD_LOGIC;
+                new_clock : out STD_LOGIC);
+     end component;
+     
+     component timer Port ( divided_clk : in STD_LOGIC;
+                reset : in STD_LOGIC;
+                max_time : in STD_LOGIC_VECTOR (11 downto 0);
+                seconds : out STD_LOGIC_VECTOR (11 downto 0));
+     end component;
+     
      signal Change, TotalRefresh, Off, At20, 
             At50, Clk_Intensity, Clk_Second, 
             Countdown, SetTo100, SetTo50, SetTo0 : STD_LOGIC;
      signal s_LightSwitch: STD_LOGIC_VECTOR (2 downto 0);
      signal RateOfChange: STD_LOGIC_VECTOR (5 downto 0);
-     signal Intensity: STD_LOGIC_VECTOR (6 downto 0);
+     --signal Intensity: STD_LOGIC_VECTOR (6 downto 0);
      signal TotalTime, CurrentTime : STD_LOGIC_VECTOR (11 downto 0);
 begin
     detectChange_m: DetectChange PORT MAP (CLK, LightSwitch, s_LightSwitch, Change);
-    TotalChange <= Change or Refresh;
+    TotalRefresh <= Change or Refresh;
     
     decoder: LightSwitchDecoder PORT MAP (s_LightSwitch, TotalTime, RateOfChange, Off);
     
@@ -90,6 +119,9 @@ begin
     fsm: MainFSM PORT MAP (Off, CLK, At20, At50, Clk_Intensity, TotalRefresh, 
                             Countdown, SetTo100, SetTo50, SetTo0);
     
+    secondClock: second_clock_divider PORT MAP (CLK, Clk_Second);
+    intensityClock: intensity_clock_divider PORT MAP (Clk_Second, RateOfChange, Clk_Intensity);
+    toSecondsClkDiv: Timer PORT MAP (Clk_Second, SetTo100, TotalTime, CurrentTime);
     
-
+    IntensityDownCounter: intensity_down_counter PORT MAP (Clk_Intensity, SetTo100, SetTo50, SetTo0, LED);
 end Behavioral;

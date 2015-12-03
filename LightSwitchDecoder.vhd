@@ -58,6 +58,5 @@ begin
         "011110" when LightSwitch = "110" else
         "100100" when LightSwitch = "111";
         
-    Off <= '1' when LightSwitch = "000" else
-        '0' when others;
+    Off <= '1' when LightSwitch = "000" else '0';
 end Behavioral;

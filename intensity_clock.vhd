@@ -35,7 +35,7 @@ use ieee.std_logic_unsigned.all;
 
 entity intensity_clock_divider is
     Port ( second_clock : in STD_LOGIC;
-           rate_of_change : in STD_LOGIC_VECTOR (4 downto 0);
+           rate_of_change : in STD_LOGIC_VECTOR (5 downto 0);
            intensity_clock : out STD_LOGIC);
 end intensity_clock_divider;
 
