@@ -37,9 +37,7 @@ entity LEDDimmer is
            Refresh : in STD_LOGIC;
            Disp_En : out STD_LOGIC_VECTOR (3 downto 0);
            Disp_Segments : out STD_LOGIC_VECTOR (7 downto 0);
-           LED : out STD_LOGIC_VECTOR (6 downto 0);
-           LED_intensity_clk : out STD_LOGIC;
-           LED_FSM_intensity_down : out STD_LOGIC);
+           LED : out STD_LOGIC);
 end LEDDimmer;
 
 architecture Behavioral of LEDDimmer is
@@ -102,6 +100,11 @@ architecture Behavioral of LEDDimmer is
                 seconds : out STD_LOGIC_VECTOR (11 downto 0));
      end component;
      
+     component pwm Port (   clk : in STD_LOGIC;
+                Intensity : in STD_LOGIC_VECTOR (6 downto 0);
+                led_clk : out STD_LOGIC);
+     end component;
+     
      signal Change, TotalRefresh, Off, At20, 
             At50, Clk_Intensity, Clk_Second, 
             Countdown, SetTo100, SetTo50, SetTo0 : STD_LOGIC;
@@ -127,11 +130,10 @@ begin
     
     display: sseg_dec PORT MAP(CurrentTime, '1', CLK, Disp_En, Disp_Segments);
     
-    IntensityDownCounter: intensity_down_counter PORT MAP (Clk_Intensity, SetTo100, SetTo50, SetTo0, LED);
+    IntensityDownCounter: intensity_down_counter PORT MAP (Clk_Intensity, SetTo100, SetTo50, SetTo0, Intensity);
     
-    test_intensity_clk : process(Clk_Intensity, Countdown) begin
-        LED_intensity_clk <= Clk_Intensity;
-        LED_FSM_intensity_down <= Countdown;
-    end process test_intensity_clk;
+    dimmer: pwm PORT MAP(CLK, Intensity, LED);
+    
+    
     
 end Behavioral;
