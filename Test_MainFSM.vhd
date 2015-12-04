@@ -52,7 +52,7 @@ architecture Behavioral of Test_MainFSM is
     signal s_IntensityDown, s_ResetTime, s_Set50, s_Set0 : STD_LOGIC;
 begin
     main_fsm: MainFSM PORT MAP 
-        (s_Clk, s_TimeAt20, s_TimeAt50, s_Clk_Intensity, s_Refresh,
+        (s_off, s_Clk, s_TimeAt20, s_TimeAt50, s_Clk_Intensity, s_Refresh,
          s_IntensityDown, s_ResetTime, s_Set50, s_Set0);
          
     runClock: process

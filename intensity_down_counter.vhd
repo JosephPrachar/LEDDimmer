@@ -51,17 +51,19 @@ begin
             current_intensity := "1100100";
             counting <= '0';
             
-        elsif(set_to_half = '1') then
-            current_intensity := "0110010"; 
-            counting <= '1';
-            
-        elsif(set_to_zero = '1') then
-            current_intensity := "0000000";
-            counting <= '0';
+       elsif(set_to_zero = '1') then
+                        current_intensity := "0000000";
+                        counting <= '0';
             
         elsif((counting = '1')) then
             current_intensity := std_logic_vector( unsigned(current_intensity) - 1);
             counting <= '1';
+            
+        elsif(set_to_half = '1') then
+            current_intensity := "0110010"; 
+            counting <= '1';
+
+            
         end if;
     end if;
         

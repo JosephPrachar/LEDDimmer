@@ -46,33 +46,27 @@ end MainFSM;
 
 architecture Behavioral of MainFSM is
 
-    type state_type is (off_state, reset, on_state, set_50, dimming, set_0);
-    signal currentState : state_type;
+    type state_type is (off_state, on_state, dimming);
+    signal currentState : state_type := on_state;
     signal nextState: state_type;
 begin
 
     advance_state : process(Clk, refresh)
     begin
         if (refresh = '1') then
-            nextState <= reset;
+            nextState <= on_state;
         elsif (off = '1') then
             nextState <= off_state;
         elsif rising_edge(Clk) then
             case currentState is 
-                when reset =>
-                    nextState <= on_state;
                 when on_state =>
                     if TimeAt50 = '1' then
-                        nextState <= set_50;
+                        nextState <= dimming;
                     end if;
-                when set_50 =>
-                    nextState <= dimming;
                 when dimming =>
                     if TimeAt20 = '1' then
-                        nextState <= set_0;
+                        nextState <= off_state;
                     end if;
-                when set_0 =>
-                    nextState <= off_state;
                 when others =>
                     null;
             end case;
@@ -86,27 +80,15 @@ begin
             when off_state =>
                 ResetTime <= '0';
                 Set50 <= '0';
-                Set0 <= '0';
+                Set0 <= '1';
             when on_state =>
-                ResetTime <= '0';
+                ResetTime <= '1';
                 Set50 <= '0';
                 Set0 <= '0';
             when dimming =>
                 ResetTime <= '0';
-                Set50 <= '0';
-                Set0 <= '0';
-            when reset =>
-                ResetTime <= '1';
-                Set50 <= '0';
-                Set0 <= '0';
-            when set_50 =>
-                ResetTime <= '0';
                 Set50 <= '1';
                 Set0 <= '0';
-            when set_0 =>
-                ResetTime <= '0';
-                Set50 <= '0';
-                Set0 <= '1';
         end case;
         if currentState = dimming then
             IntensityDown <= Clk_Intensity;
