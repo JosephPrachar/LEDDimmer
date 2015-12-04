@@ -36,8 +36,10 @@ entity LEDDimmer is
            LightSwitch : in STD_LOGIC_VECTOR (2 downto 0);
            Refresh : in STD_LOGIC;
            Disp_En : out STD_LOGIC_VECTOR (3 downto 0);
-           Disp_Segments : out STD_LOGIC_VECTOR (8 downto 0);
-           LED : out STD_LOGIC);
+           Disp_Segments : out STD_LOGIC_VECTOR (7 downto 0);
+           LED : out STD_LOGIC_VECTOR (6 downto 0);
+           LED_intensity_clk : out STD_LOGIC;
+           LED_FSM_intensity_down : out STD_LOGIC);
 end LEDDimmer;
 
 architecture Behavioral of LEDDimmer is
@@ -116,12 +118,20 @@ begin
     past50: ElapsedPercent PORT MAP (TotalTime, CurrentTime, 50, At50);
     past20: ElapsedPercent PORT MAP (TotalTime, CurrentTime, 20, At20);
     
-    fsm: MainFSM PORT MAP (Off, CLK, At20, At50, Clk_Intensity, TotalRefresh, 
+    fsm: MainFSM PORT MAP (Off, Clk_Second, At20, At50, Clk_Intensity, TotalRefresh, 
                             Countdown, SetTo100, SetTo50, SetTo0);
     
     secondClock: second_clock_divider PORT MAP (CLK, Clk_Second);
     intensityClock: intensity_clock_divider PORT MAP (Clk_Second, RateOfChange, Clk_Intensity);
     toSecondsClkDiv: Timer PORT MAP (Clk_Second, SetTo100, TotalTime, CurrentTime);
     
-    IntensityDownCounter: intensity_down_counter PORT MAP (Clk_Intensity, SetTo100, SetTo50, SetTo0, Intensity);
+    display: sseg_dec PORT MAP(CurrentTime, '1', CLK, Disp_En, Disp_Segments);
+    
+    IntensityDownCounter: intensity_down_counter PORT MAP (Clk_Intensity, SetTo100, SetTo50, SetTo0, LED);
+    
+    test_intensity_clk : process(Clk_Intensity, Countdown) begin
+        LED_intensity_clk <= Clk_Intensity;
+        LED_FSM_intensity_down <= Countdown;
+    end process test_intensity_clk;
+    
 end Behavioral;

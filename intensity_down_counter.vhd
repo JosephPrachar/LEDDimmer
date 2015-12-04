@@ -35,32 +35,39 @@ end intensity_down_counter;
 
 architecture Behavioral of intensity_down_counter is
 
-    signal current_intensity : integer :=100;
-    signal counting : std_logic :='0';
+    
+    signal counting: std_logic:='0';
 
 begin
 
-    determine_intensity: process(reset, set_to_half, set_to_zero, intensity_clk) begin
+    determine_intensity: process(reset, set_to_half, set_to_zero, intensity_clk) 
+        variable current_intensity : std_logic_vector (6 downto 0):="0000000";
+        
+        begin
     
+    
+    if (rising_edge(intensity_clk)) then
         if (reset = '1') then
-            current_intensity <= 100;
+            current_intensity := "1100100";
             counting <= '0';
             
-        elsif(set_to_half = '1') then 
-            current_intensity <= 50;
+        elsif(set_to_half = '1') then
+            current_intensity := "0110010"; 
             counting <= '1';
             
         elsif(set_to_zero = '1') then
-            current_intensity <= 0;
+            current_intensity := "0000000";
             counting <= '0';
             
-        elsif((counting = '1') AND RISING_EDGE(intensity_clk)) then
-            current_intensity <= current_intensity - 1;
-            
+        elsif((counting = '1')) then
+            current_intensity := std_logic_vector( unsigned(current_intensity) - 1);
+            counting <= '1';
         end if;
+    end if;
         
-        intensity <= std_logic_vector(to_unsigned(current_intensity, 7));
+        intensity <= current_intensity;
     
     end process determine_intensity;
+        
         
 end Behavioral;

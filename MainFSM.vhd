@@ -53,9 +53,9 @@ begin
 
     advance_state : process(Clk, refresh)
     begin
-        if rising_edge(refresh) then
+        if (refresh = '1') then
             nextState <= reset;
-        elsif rising_edge(off) then
+        elsif (off = '1') then
             nextState <= off_state;
         elsif rising_edge(Clk) then
             case currentState is 

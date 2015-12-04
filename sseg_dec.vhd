@@ -113,12 +113,12 @@ begin
 		msd_v := msd; 
 		
 		-- do the lead zero blanking for two msb's
-		if (mmsd_v = X"0") then 
-		   if (msd_v = X"0") then 
-			   msd_v := X"F"; 
-			end if; 
-		   mmsd_v := X"F"; 
-		end if; 
+		--if (mmsd_v = X"0") then 
+		  -- if (msd_v = X"0") then 
+			--   msd_v := X"F"; 
+			--end if; 
+		   --mmsd_v := X"F"; 
+		--end if; 
 			
 		if (valid = '1') then
 			case cnt_dig is

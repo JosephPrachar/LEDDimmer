@@ -42,14 +42,14 @@ end intensity_clock_divider;
 architecture Behavioral of intensity_clock_divider is
 
     signal count : integer :=1;
-    signal divided_clk: std_logic :='0';
-    signal rate_of_change_half : std_logic_vector (4 downto 0);
+    signal divided_clk: std_logic;
+    signal rate_of_change_half : std_logic_vector (5 downto 0);
     
 begin
 
      clock_div: process(second_clock) begin
         
-        if (rate_of_change = "00001") then
+        if (rate_of_change = "000001") then
             intensity_clock <= second_clock;
             count <= 1;
             
