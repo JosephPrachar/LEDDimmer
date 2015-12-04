@@ -37,7 +37,8 @@ entity LEDDimmer is
            Refresh : in STD_LOGIC;
            Disp_En : out STD_LOGIC_VECTOR (3 downto 0);
            Disp_Segments : out STD_LOGIC_VECTOR (7 downto 0);
-           LED : out STD_LOGIC);
+           LED : out STD_LOGIC_VECTOR (7 downto 0) := "00000000";
+           Ref : out STD_LOGIC_VECTOR (7 downto 0) := "11111111");
 end LEDDimmer;
 
 architecture Behavioral of LEDDimmer is
@@ -112,7 +113,7 @@ architecture Behavioral of LEDDimmer is
      
      signal Change, TotalRefresh, Off, At20, 
             At50, Clk_Intensity, Clk_Second, 
-            Countdown, SetTo100, reset_mod, SetTo50, SetTo0 : STD_LOGIC;
+            Countdown, SetTo100, reset_mod, SetTo50, SetTo0, LED_s : STD_LOGIC;
      signal s_LightSwitch: STD_LOGIC_VECTOR (2 downto 0);
      signal RateOfChange: STD_LOGIC_VECTOR (5 downto 0);
      signal Intensity: STD_LOGIC_VECTOR (6 downto 0);
@@ -138,6 +139,17 @@ begin
     
     IntensityDownCounter: intensity_down_counter PORT MAP (Clk_Intensity, SetTo100, SetTo50, SetTo0, Intensity);
     
-    dimmer_pwm : pwm PORT MAP(CLK, Intensity, LED);
+    dimmer_pwm : pwm PORT MAP(CLK, Intensity, LED_s);
+    
+    LED(0) <= LED_s;
+   -- LED(1) <= LED_s;
+   -- LED(2) <= LED_s;
+   -- LED(3) <= LED_s;
+   -- LED(4) <= LED_s;
+   -- LED(5) <= LED_s;
+   -- LED(6) <= LED_s;
+   -- LED(7) <= LED_s;
+    
+    
     
 end Behavioral;
