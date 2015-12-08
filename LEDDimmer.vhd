@@ -37,8 +37,8 @@ entity LEDDimmer is
            Refresh : in STD_LOGIC;
            Disp_En : out STD_LOGIC_VECTOR (3 downto 0);
            Disp_Segments : out STD_LOGIC_VECTOR (7 downto 0);
-           LED : out STD_LOGIC_VECTOR (7 downto 0) := "00000000";
-           Ref : out STD_LOGIC_VECTOR (7 downto 0) := "11111111");
+           LED : out STD_LOGIC:='0';
+           Ref : out STD_LOGIC :='1');
 end LEDDimmer;
 
 architecture Behavioral of LEDDimmer is
@@ -141,7 +141,7 @@ begin
     
     dimmer_pwm : pwm PORT MAP(CLK, Intensity, LED_s);
     
-    LED(0) <= LED_s;
+    LED <= LED_s;
    -- LED(1) <= LED_s;
    -- LED(2) <= LED_s;
    -- LED(3) <= LED_s;
