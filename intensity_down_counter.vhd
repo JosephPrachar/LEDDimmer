@@ -1,21 +1,11 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
 -- Create Date: 12/01/2015 12:40:35 PM
--- Design Name: 
 -- Module Name: intensity_down_counter - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Project Name: LEDDimmer
+-- Authors: Joseph Prachar, Thomas Franklin, Corey Saeda, Vivek Bhakta 
+-- Description: Decreases the intensity by 1% each rising edge of the intensity
+--              clock, and resets the intensity to 100% when the reset button is
+--              pressed.
 ----------------------------------------------------------------------------------
 
 

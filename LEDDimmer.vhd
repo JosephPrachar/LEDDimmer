@@ -1,35 +1,15 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
 -- Create Date: 12/02/2015 05:02:02 PM
--- Design Name: 
 -- Module Name: LEDDimmer - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
+-- Project Name: LEDDimmer
+-- Authors: Joseph Prachar, Thomas Franklin, Corey Saeda, Vivek Bhakta 
+-- Description: Top module for the project, linking all the necessary modules
 -- 
 ----------------------------------------------------------------------------------
 
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity LEDDimmer is
     Port ( CLK : in STD_LOGIC;
@@ -142,13 +122,6 @@ begin
     dimmer_pwm : pwm PORT MAP(CLK, Intensity, LED_s);
     
     LED <= LED_s;
-   -- LED(1) <= LED_s;
-   -- LED(2) <= LED_s;
-   -- LED(3) <= LED_s;
-   -- LED(4) <= LED_s;
-   -- LED(5) <= LED_s;
-   -- LED(6) <= LED_s;
-   -- LED(7) <= LED_s;
     
     
     

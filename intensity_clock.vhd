@@ -1,21 +1,10 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
 -- Create Date: 12/01/2015 10:54:36 AM
--- Design Name: 
 -- Module Name: intensity_clock_divider - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Project Name: LEDDimmer
+-- Authors: Joseph Prachar, Thomas Franklin, Corey Saeda, Vivek Bhakta 
+-- Description: Divides the board's clock into intervals at which the LED should
+--              be dimmed by 1%
 ----------------------------------------------------------------------------------
 
 
@@ -23,15 +12,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 use ieee.std_logic_unsigned.all;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity intensity_clock_divider is
     Port ( second_clock : in STD_LOGIC;

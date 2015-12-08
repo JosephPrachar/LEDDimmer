@@ -1,21 +1,9 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
 -- Create Date: 11/23/2015 04:09:48 PM
--- Design Name: 
 -- Module Name: Timer - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Project Name: LEDDimmer
+-- Authors: Joseph Prachar, Thomas Franklin, Corey Saeda, Vivek Bhakta 
+-- Description: Counts down in seconds from the user set time
 ----------------------------------------------------------------------------------
 
 

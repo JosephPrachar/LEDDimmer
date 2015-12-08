@@ -1,20 +1,9 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
 -- Create Date: 12/01/2015 10:41:16 AM
--- Design Name: 
 -- Module Name: second_clock_divider - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
+-- Project Name: LEDDimmer
+-- Authors: Joseph Prachar, Thomas Franklin, Corey Saeda, Vivek Bhakta 
+-- Description: Divides the board's clock into seconds
 -- 
 ----------------------------------------------------------------------------------
 
